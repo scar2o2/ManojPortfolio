@@ -250,7 +250,6 @@
     --skills-depth: 0px;
     --skills-drift: 0px;
     --skills-speed: 0px;
-    --marquee-boost: 0px;
     position: relative;
     display: grid;
     grid-template-columns: minmax(360px, 0.92fr) minmax(0, 1fr);
@@ -332,35 +331,24 @@
     align-self: stretch;
     min-height: 720px;
     overflow: hidden;
-    transform: translate3d(calc(var(--skills-drift) * 0.35), calc(var(--skills-depth) * 0.2 + var(--skills-speed) * 0.08), 0);
-    transition: transform 140ms linear;
   }
 
   .skill-pill-row {
-    --row-shift: 1;
-    --row-depth: 0px;
     --row-direction: normal;
-    --row-boost-sign: 1;
     display: flex;
     gap: clamp(20px, 2.8vw, 42px);
     width: max-content;
     opacity: 0;
-    transform: translate3d(calc(var(--row-shift) * (var(--skills-drift) * 0.35 + 42px) + var(--row-boost-sign) * var(--marquee-boost)), calc(var(--row-depth) + var(--skills-depth) * 0.12), 0);
+    transform: translate3d(42px, 0, 0);
     animation:
       skill-row-in 900ms cubic-bezier(0.22, 1, 0.36, 1) var(--row-delay, 0ms) forwards,
       skill-row-marquee 24s linear calc(var(--row-delay, 0ms) + 900ms) infinite;
     animation-direction: normal, var(--row-direction);
-    transition: transform 140ms linear;
-    will-change: transform;
+    will-change: translate;
   }
 
   .skill-pill-row:nth-child(even) {
-    --row-boost-sign: -1;
     margin-left: auto;
-  }
-
-  .skills-showcase.is-scroll-boosted .skill-pill-row {
-    filter: contrast(1.04);
   }
 
   .skill-pill-orbit {
@@ -416,7 +404,7 @@
   .focus-slideshow {
     position: relative;
     padding: 0;
-    overflow: visible;
+    overflow: hidden;
     scroll-margin-top: var(--header-height);
   }
 
@@ -432,12 +420,10 @@
   }
 
   .focus-stage {
-    position: sticky;
-    top: var(--header-height);
+    position: relative;
     height: calc(100vh - var(--header-height));
     overflow: hidden;
     background: #141414;
-    contain: paint;
     z-index: 1;
   }
 
@@ -461,22 +447,19 @@
   }
 
   .service-track {
-    --focus-shift: 0%;
     display: flex;
     gap: 0;
     margin-inline: 0;
     height: 100%;
     width: 100%;
-    overflow-x: visible;
+    overflow-x: auto;
     overflow-y: hidden;
     overscroll-behavior-inline: contain;
     padding: 0;
-    scroll-snap-type: none;
+    scroll-snap-type: x mandatory;
     scrollbar-width: none;
     min-height: 100%;
-    transform: translate3d(var(--focus-shift), 0, 0);
-    transition: transform 160ms linear;
-    will-change: transform;
+    scroll-behavior: smooth;
   }
 
   .service-track::-webkit-scrollbar {
@@ -485,9 +468,6 @@
 
   .service-card {
     @apply relative flex min-w-0 flex-col justify-end overflow-hidden border-y border-paper/20 bg-ink p-6 text-paper transition duration-300 md:p-10;
-    --content-depth: 1;
-    --content-parallax: 0px;
-    --image-parallax: 0%;
     flex: 0 0 100%;
     isolation: isolate;
     scroll-snap-align: start;
@@ -497,15 +477,49 @@
     padding-top: clamp(90px, 14vh, 150px);
   }
 
+  .focus-controls {
+    position: absolute;
+    right: clamp(16px, 4vw, 48px);
+    bottom: clamp(16px, 4vw, 42px);
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #f7f4ec;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  .focus-controls button {
+    border: 1px solid rgba(247, 244, 236, 0.5);
+    border-radius: 999px;
+    background: rgba(20, 20, 20, 0.42);
+    padding: 10px 14px;
+    color: inherit;
+    cursor: pointer;
+    transition: background 180ms ease, opacity 180ms ease;
+  }
+
+  .focus-controls button:hover:not(:disabled) {
+    background: rgba(247, 244, 236, 0.18);
+  }
+
+  .focus-controls button:disabled {
+    cursor: default;
+    opacity: 0.36;
+  }
+
+  .focus-controls span {
+    min-width: 48px;
+    text-align: center;
+  }
+
   .service-content {
     position: relative;
     z-index: 1;
     max-width: min(920px, 100%);
-    opacity: var(--content-depth);
-    transform: translate3d(var(--content-parallax), 0, 0) scale(var(--content-depth));
-    transform-origin: left center;
-    transition: opacity 160ms linear, transform 160ms linear;
-    will-change: transform, opacity;
   }
 
   .service-card:hover,
@@ -539,10 +553,8 @@
     background-size: cover;
     background-position: center;
     filter: blur(9px) saturate(0.95) contrast(1.04);
-    transform: translate3d(var(--image-parallax), 0, 0) scale(1.12);
+    transform: scale(1.08);
     transition: filter 240ms ease, transform 160ms linear;
-    width: 112%;
-    left: -6%;
   }
 
   .strength-image::after {
@@ -559,7 +571,7 @@
 
   .service-card:hover .strength-image::before {
     filter: blur(3px) saturate(1.08) contrast(1.03);
-    transform: translate3d(var(--image-parallax), 0, 0) scale(1.06);
+    transform: scale(1.04);
   }
 
   .strength-image span,
@@ -992,15 +1004,6 @@ h3,
   background: #141414;
 }
 
-.focus-slideshow.section-transition {
-  opacity: 1;
-  transform: none;
-}
-
-.focus-slideshow.section-transition::before {
-  display: none;
-}
-
 .app-shell {
   transform-origin: center top;
   transition:
@@ -1233,7 +1236,7 @@ h3,
 @keyframes skill-row-in {
   to {
     opacity: 1;
-    transform: translate3d(calc(var(--row-shift) * var(--skills-drift) * 0.35 + var(--row-boost-sign) * var(--marquee-boost)), calc(var(--row-depth) + var(--skills-depth) * 0.12), 0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
@@ -1491,10 +1494,6 @@ h3,
     min-height: calc(100vh - var(--header-height));
     padding: 18px;
     padding-top: clamp(82px, 13vh, 120px);
-  }
-
-  .focus-intro {
-    margin-bottom: 28px;
   }
 
   .focus-intro p:last-child {

@@ -33,11 +33,6 @@ export function useReveal() {
     );
 
     sections.forEach((section) => {
-      if (section.classList.contains("focus-slideshow")) {
-        section.classList.add("is-section-visible");
-        return;
-      }
-
       section.classList.add("section-transition");
       sectionObserver.observe(section);
     });

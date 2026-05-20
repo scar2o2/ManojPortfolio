@@ -30,53 +30,6 @@ export function SkillsSection() {
     root.querySelectorAll("[data-reveal]").forEach((element) => {
       element.classList.add("is-visible");
     });
-
-    let frame = null;
-    let lastY = window.scrollY;
-    let lastTime = performance.now();
-    let speedReset = null;
-
-    const syncParallax = () => {
-      frame = null;
-      const now = performance.now();
-      const deltaY = window.scrollY - lastY;
-      const deltaTime = Math.max(16, now - lastTime);
-      const scrollSpeed = Math.max(-1, Math.min(1, deltaY / deltaTime / 1.2));
-      const rect = root.getBoundingClientRect();
-      const progress = Math.max(-1, Math.min(1, (window.innerHeight * 0.5 - rect.top) / Math.max(rect.height, 1)));
-      const velocity = Math.max(-1, Math.min(1, progress * 1.1 + scrollSpeed * 0.65));
-
-      root.style.setProperty("--skills-progress", progress.toFixed(3));
-      root.style.setProperty("--skills-depth", `${velocity * 92}px`);
-      root.style.setProperty("--skills-drift", `${velocity * -68}px`);
-      root.style.setProperty("--skills-speed", `${scrollSpeed * 120}px`);
-      root.style.setProperty("--marquee-boost", `${Math.abs(scrollSpeed) * 18}px`);
-      root.classList.toggle("is-scroll-boosted", Math.abs(scrollSpeed) > 0.18);
-      lastY = window.scrollY;
-      lastTime = now;
-
-      if (speedReset) window.clearTimeout(speedReset);
-      speedReset = window.setTimeout(() => {
-        root.style.setProperty("--marquee-boost", "0px");
-        root.classList.remove("is-scroll-boosted");
-      }, 180);
-    };
-
-    const requestSync = () => {
-      if (frame) return;
-      frame = window.requestAnimationFrame(syncParallax);
-    };
-
-    syncParallax();
-    window.addEventListener("scroll", requestSync, { passive: true });
-    window.addEventListener("resize", requestSync);
-
-    return () => {
-      if (frame) window.cancelAnimationFrame(frame);
-      if (speedReset) window.clearTimeout(speedReset);
-      window.removeEventListener("scroll", requestSync);
-      window.removeEventListener("resize", requestSync);
-    };
   }, []);
 
   return (
@@ -105,9 +58,7 @@ export function SkillsSection() {
             key={`row-${rowIndex}`}
             style={{
               "--row-delay": `${rowIndex * 90}ms`,
-              "--row-direction": rowIndex % 2 === 0 ? "normal" : "reverse",
-              "--row-shift": `${rowIndex % 2 === 0 ? -1 : 1}`,
-              "--row-depth": `${(rowIndex - 2) * 16}px`
+              "--row-direction": rowIndex % 2 === 0 ? "normal" : "reverse"
             }}
           >
             {[...row, ...row].map((skill, skillIndex) => (
