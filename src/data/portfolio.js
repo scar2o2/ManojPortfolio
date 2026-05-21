@@ -1,6 +1,6 @@
 export const navItems = [
-  ["Projects", "projects"],
   ["Focus", "focus"],
+  ["Projects", "projects"],
   ["Experience", "experience"],
   ["Achievements", "achievements"],
   ["Contact", "contact"]
@@ -101,6 +101,10 @@ export const achievements = [
   {
     title: "100+ LeetCode Problems",
     copy: "Practiced data structures and algorithms across Java, Python, SQL, and JavaScript."
+  },
+  {
+    title: "Certifications",
+    copy: "I have earned certifications in Java Programming, Python Development, and SQL Database Management from recognized online platforms, demonstrating my commitment to continuous learning and skill development in software engineering."
   }
 ];
 

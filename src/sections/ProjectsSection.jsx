@@ -1,5 +1,5 @@
 import React from "react";
-import { MiniVisual } from "../components/MiniVisual";
+import { ProjectSlideshow } from "../components/ProjectSlideshow";
 import { SectionTitle } from "../components/SectionTitle";
 import { projects } from "../data/portfolio";
 
@@ -21,8 +21,7 @@ export function ProjectsSection() {
             data-cursor="VIEW"
           >
             <div className={`project-image ${type}`}>
-              <span>{number}</span>
-              <MiniVisual type="project" />
+              <ProjectSlideshow type={type} number={number} title={title} stack={stack} />
             </div>
             <div className="project-copy">
               <div className="min-w-0">

@@ -109,7 +109,6 @@ export function App() {
           <AchievementsSection />
           <ContactSection />
         </main>
-        <Footer />
       </div>
     </>
   );

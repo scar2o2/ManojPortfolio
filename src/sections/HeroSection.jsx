@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import { PortraitCard } from "../components/PortraitCard";
 import { profile } from "../data/portfolio";
 
 function MagneticName({ firstName, lastName }) {
@@ -79,17 +80,22 @@ export function HeroSection() {
   return (
     <section className="grid min-h-screen items-center gap-8 px-4 pb-16 pt-36 min-[390px]:px-5 sm:gap-10 md:grid-cols-[0.82fr_1fr] md:px-14 md:pb-20 md:pt-28">
       <div data-reveal className="hero-media" data-cursor="CODE">
-        <div className="terminal-dots">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <pre>{`const student = {
+        <div className="hero-visual-grid">
+          <PortraitCard />
+          <div className="hero-code-card">
+            <div className="terminal-dots">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <pre>{`const student = {
   name: "${profile.fullName}",
   major: "Computer Science",
-  stack: ["React.js", "Node.js", "MySQL"],
-  focus: "Backend and full-stack apps"
+  stack: ["MERN", "Tailwind CSS", "MySQL"],
+  focus: "CI/CD and full-stack apps"
 };`}</pre>
+          </div>
+        </div>
         <div className="bar-field" aria-hidden="true">
           {Array.from({ length: 8 }).map((_, index) => (
             <i key={index}></i>
@@ -99,7 +105,7 @@ export function HeroSection() {
 
       <div className="hero-copy">
         <p data-reveal className="eyebrow">
-          Computer Science Portfolio
+          Student Portfolio
         </p>
         <MagneticName firstName={profile.firstName} lastName={profile.lastName} />
         <p data-reveal className="fluid-copy mt-8 max-w-3xl text-ink/80">

@@ -6,9 +6,9 @@ export function AchievementsSection() {
   return (
     <section id="achievements" className="px-4 py-20 min-[390px]:px-5 md:px-14 md:py-36">
       <SectionTitle
-        eyebrow="Achievements"
-        first="Practice"
-        second="Signals"
+        eyebrow=""
+        first="Achievements"
+        second=""
         copy="A few markers of continued learning outside the classroom."
       />
       <div data-reveal className="achievement-grid">
