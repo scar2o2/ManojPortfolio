@@ -11,14 +11,29 @@
 
   html {
     scroll-behavior: smooth;
+    overflow-x: clip;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 
   body {
     @apply m-0 overflow-x-hidden bg-paper font-sans text-ink;
+    max-width: 100%;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 
   #root {
     @apply min-w-0 overflow-x-hidden;
+    max-width: 100%;
+  }
+
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar,
+  *::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
   }
 
   a {
@@ -674,7 +689,15 @@
   }
 
   .pin-spacer:has(.focus-stage) {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
     background: #f7f4ec !important;
+  }
+
+  .pin-spacer:has(.focus-stage) .focus-stage {
+    width: 100% !important;
+    max-width: 100% !important;
   }
 
   .focus-intro h2 {
@@ -698,6 +721,7 @@
 
   .service-track {
     --focus-card-width: min(78vw, 980px);
+    --focus-track-pad: max(18px, calc((100dvw - var(--focus-card-width)) / 2));
     display: flex;
     gap: clamp(18px, 4vw, 64px);
     margin-inline: 0;
@@ -705,7 +729,7 @@
     width: max-content;
     overflow: visible;
     overscroll-behavior-inline: contain;
-    padding: clamp(84px, 12vh, 128px) calc((100vw - var(--focus-card-width)) / 2) clamp(44px, 8vh, 78px);
+    padding: clamp(84px, 12vh, 128px) var(--focus-track-pad) clamp(44px, 8vh, 78px);
     scrollbar-width: none;
     min-height: 100%;
     will-change: transform;

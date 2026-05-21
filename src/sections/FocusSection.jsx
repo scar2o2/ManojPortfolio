@@ -40,7 +40,7 @@ export function FocusSection() {
       const clamp = gsap.utils.clamp(0, 1);
       const travelDistance = () => Math.max(1, track.current.scrollWidth - stage.current.clientWidth);
       const maxX = () => -travelDistance();
-      const scrollDistance = () => Math.max(stage.current.clientWidth * 3.8, track.current.scrollWidth * 1.35);
+      const scrollDistance = () => Math.max(stage.current.clientWidth * 3.8, travelDistance() * 1.2);
       const updateDepth = () => {
         const x = Number(gsap.getProperty(track.current, "x")) || 0;
         const viewportCenter = stage.current.clientWidth / 2;
