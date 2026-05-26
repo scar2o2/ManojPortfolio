@@ -68,12 +68,12 @@ export const projects = [
     repoUrl: "https://github.com/scar2o2/CampusFind"
   },
   {
-    title: "SyncEngine Event Synchronization Platform",
-    stack: "Node + MySQL + Socket.IO",
-    type: "notes",
+    title: "DeptTix Event Ticket Booking System",
+    stack: "React.js + Spring Boot + PostgreSQL + Firebase Auth",
+    type: "tickets",
     number: "02",
-    liveUrl: "https://syncengine-2j72.onrender.com",
-    repoUrl: "https://github.com/scar2o2/SyncEngine"
+    liveUrl: "https://dept-tix.vercel.app",
+    repoUrl: "https://github.com/scar2o2/DeptTix"
   },
   {
     title: "Scalable Full Stack Application",
