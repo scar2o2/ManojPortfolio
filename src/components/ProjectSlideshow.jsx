@@ -1,4 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import campusAuth from "../assets/campus_auth.png";
+import campusFound from "../assets/campus_found.png";
+import campusLost from "../assets/campus_lost.png";
+import campusPost from "../assets/campus_post.png";
+import campusProfile from "../assets/campus_profile.png";
 import eventsAdmin from "../assets/events_admin.png";
 import eventsBooking from "../assets/events_booking.png";
 import eventsHistory from "../assets/events_history.png";
@@ -7,10 +12,11 @@ import eventsUser from "../assets/events_user.png";
 
 const slidesByType = {
   planner: [
-    { label: "Home", detail: "Search lost and found items across campus.", layout: "hero" },
-    { label: "Listings", detail: "Browse item cards with status and metadata.", layout: "grid" },
-    { label: "Report", detail: "Submit a lost or found item in a guided flow.", layout: "form" },
-    { label: "Mobile", detail: "Responsive claim experience for quick updates.", layout: "mobile" }
+    { label: "Auth Module", detail: "Sign in, create an account, verify email, or continue with Google.", layout: "image", image: campusAuth },
+    { label: "Lost Item Page", detail: "Browse reported lost items with search and filters by category or location.", layout: "image", image: campusLost },
+    { label: "Found Items Page", detail: "View found items waiting to be claimed, with photos, search, and filters.", layout: "image", image: campusFound },
+    { label: "Post Item Module", detail: "Post a lost or found item with the required details and context.", layout: "image", image: campusPost },
+    { label: "Profile Module", detail: "View or edit user details and manage personal lost and found posts.", layout: "image", image: campusProfile }
   ],
   notes: [
     { label: "Events", detail: "Live schedule overview with shared sessions.", layout: "hero" },

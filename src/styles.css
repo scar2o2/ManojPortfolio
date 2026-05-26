@@ -2277,10 +2277,12 @@ h3,
   gap: 0;
   opacity: 0;
   transform-style: preserve-3d;
+  will-change: opacity, transform;
 }
 
 .loader.is-reveal .loader-grid {
   opacity: 1;
+  pointer-events: none;
 }
 
 .loader-tile {
@@ -2292,6 +2294,7 @@ h3,
   backface-visibility: hidden;
   box-shadow: 0 0 0 1px #141414;
   transform-style: preserve-3d;
+  transform: translateZ(0);
   will-change: transform, opacity, filter, box-shadow;
 }
 

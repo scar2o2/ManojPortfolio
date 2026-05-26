@@ -80,7 +80,12 @@ export function Loader() {
   }, [prefersReducedMotion]);
 
   useEffect(() => {
-    if (phase !== "reveal" || !tiles.length) return undefined;
+    if (phase !== "reveal") return undefined;
+
+    if (!tiles.length) {
+      const fallback = window.setTimeout(() => setPhase("complete"), 360);
+      return () => window.clearTimeout(fallback);
+    }
 
     const directionMap = {
       "top-bottom": { axis: "rotateX", angle: -112, origin: "50% 100%" },
@@ -90,6 +95,9 @@ export function Loader() {
     };
 
     const ctx = gsap.context(() => {
+      const revealStart = 0.22;
+      const settleBuffer = 0.28;
+      const maxTileEnd = Math.max(...tiles.map((tile) => tile.delay + tile.duration));
       const timeline = gsap.timeline({
         defaults: { ease: "power3.inOut" },
         onComplete: () => setPhase("complete")
@@ -114,7 +122,9 @@ export function Loader() {
           transformPerspective: 900,
           rotateX: 0,
           rotateY: 0,
-          z: 0
+          z: 0,
+          opacity: 1,
+          force3D: true
         });
 
         timeline.to(
@@ -127,25 +137,18 @@ export function Loader() {
             duration: data.duration,
             ease: "power3.in"
           },
-          0.2 + data.delay
-        );
-
-        timeline.set(
-          tile,
-          {
-            opacity: 0,
-            pointerEvents: "none"
-          },
-          0.2 + data.delay + data.duration
+          revealStart + data.delay
         );
       });
 
-      timeline.set(
+      timeline.to(
         loaderRef.current,
         {
-          autoAlpha: 0
+          autoAlpha: 0,
+          duration: 0.22,
+          ease: "power2.out"
         },
-        ">"
+        revealStart + maxTileEnd + settleBuffer
       );
     }, loaderRef);
 
